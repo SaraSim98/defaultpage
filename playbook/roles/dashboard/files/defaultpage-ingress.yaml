@@ -1,0 +1,17 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: page-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$1 #nginx ingress controller
+spec:
+  rules:
+     - http:
+        paths:
+          - path: / #the external path we want for our service
+            pathType: Prefix
+            backend:
+              service:
+                name: defaultpage-service #the service we should point to
+                port:
+                  number: 8000 

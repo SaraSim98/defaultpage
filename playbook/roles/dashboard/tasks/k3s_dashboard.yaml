@@ -1,0 +1,17 @@
+---
+
+- name: Deploy Kubernetes Dashboard 
+  ansible.builtin.command: kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.7.0/aio/deploy/recommended.yaml
+
+- name: Copy Dashboard Configuration File in home directory
+  ansible.builtin.copy:
+    src: dashboard_adminuser.yaml
+    dest: "./dashboard_user.yaml"
+
+- name: Apply Dashboard Configuration File
+  ansible.builtin.command: kubectl apply -f dashboard_user.yaml
+
+- name: Clean Dashboard Configuration File
+  file:
+    path: dashboard_user.yaml
+    state: absent
